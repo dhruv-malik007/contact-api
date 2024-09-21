@@ -24,10 +24,13 @@ def validate_data(data):
         return "Invalid email address"
     if not data.get('password'):
         return "Password cannot be blank"
+    pattern = r'^(?=.*[A-Z])(?=.*[\W_]).{8,}$'
+    if not re.match(pattern, data.get('password')):
+        return "Password must be at least 8 characters long, contain at least one uppercase letter, and one special character."
+
     return None
 
 def is_valid_email(email):
-    # regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$'
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
     if re.match(regex, email):
         return True
